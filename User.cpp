@@ -12,3 +12,5 @@ struct Member {
 	string phNo;
 	char gender;
 };
+
+static void userMenu() {}
