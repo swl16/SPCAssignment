@@ -24,20 +24,20 @@ int main() {
     addschedule(schedules);
     displayschedule(schedules);
 
-    //do {
-    //    cout << "\n=== Gym Schedule Management ===\n";
-    //    cout << "1. Add Schedule\n";
-    //    cout << "2. Display Schedules\n";
-    //    cout << "3. Search Schedule by Date\n";
-    //    cout << "4. Update Schedule\n";
-    //    cout << "5. Cancel Schedule\n";
-    //    cout << "6. Assign Trainer\n";
-    //    cout << "7. Check System Conflicts\n";
-    //    cout << "0. Exit\n";
-    //    cout << "Enter your choice: ";
-    //    cin >> choice;
+    do {
+        cout << "\n=== Gym Schedule Management ===\n";
+        cout << "1. Add Schedule\n";
+        cout << "2. Display Schedules\n";
+        cout << "3. Search Schedule by Date\n";
+        cout << "4. Update Schedule\n";
+        cout << "5. Cancel Schedule\n";
+        cout << "6. Assign Trainer\n";
+        cout << "7. Check System Conflicts\n";
+        cout << "0. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
 
-    //} while (choice != 0);
+    } while (choice != 0);
 
     return 0;
 }

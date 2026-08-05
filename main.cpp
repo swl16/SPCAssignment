@@ -2,7 +2,7 @@
 #include<iomanip>
 #include "Admin.cpp"
 #include "User.cpp"
-
+#include "Schedule.cpp"
 using namespace std;
 
 int main() {
