@@ -27,6 +27,9 @@
     <ClCompile Include="membership.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Schedule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="user.txt" />
