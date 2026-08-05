@@ -1,7 +1,8 @@
 #include<iostream>
 #include<iomanip>
 #include "Admin.cpp"
-#include "User.cpp"
+#include "UserMenu.cpp"
+#include "User.hpp"
 
 using namespace std;
 
@@ -29,7 +30,7 @@ int main() {
 			adminMenu();
 			break;
 		case '0':
-			cout << "Exiting the program." << endl;
+			cout << "Thank you!" << endl;
 			break;
 		default:
 			cout << "Invalid choice. Please try again." << endl;
