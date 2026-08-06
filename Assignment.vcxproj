@@ -126,11 +126,16 @@
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="membership.cpp" />
+    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="UserMenu.cpp" />
     <ClCompile Include="Schedule.cpp" />
     <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="user.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="User.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

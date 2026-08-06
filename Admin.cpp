@@ -4,4 +4,4 @@
 
 using namespace std;
 
-static void adminMenu() {}
+void adminMenu() {}
