@@ -9,28 +9,85 @@
 
 using namespace std;
 
-vector<User> users;
+const int MAX_USERS = 1000;
+int userCount = 0;
+string loggedInUser = "";
 
+void registerUser(User* users) {   // user registration 
 
-bool userExist(const string& username) {
-	for (int i = 0; i < users.size(); i++) {
-		if (users[i].username == username) {
-			return true; // User already exists
-		}
-	}
-	return false; // User does not exist
-}
+	User registeringUser = User();
 
-bool loginUser(const string& username, const string& password) {
-		for (int i = 0; i < users.size(); i++) {
-			if (users[i].username == username && users[i].password == password) {
-			return true; // Login successful
+	string username, password;
+
+	while (true) {
+		cout << "Enter a new username (without space): ";
+		cin >> username;
+
+		bool usernameExists = false;
+		for (int i = 0; i < userCount; i++) {
+			if (users[i].usernames == username) {
+				cout << "Username already exists. Please try again.\n";
+				usernameExists = true;
+				break;
 			}
 		}
-		return false; // Login failed
+
+		if (!usernameExists) {
+			break; // Valid username found
+		}
+		cout << "\nPress ENTER to continue.";
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');    // Proper buffer clearing
+		cin.get();
+	}
+	cout << "Enter a new password: ";
+	cin >> password;
+
+	registeringUser.usernames = username;
+	registeringUser.passwords = password;
+	users[userCount] = registeringUser;
+	userCount++;
+
+	cout << "Registration successful!\n";
+
 }
 
-void loadUser() {
+int loginUser(User* users) {    // user login
+
+	if (!loggedInUser.empty()) {
+		cout << "You are already logged in as " << loggedInUser << ". Please log out first.\n";
+		return 1;
+	}
+
+	string username, password;
+	cout << "Enter username: ";
+	cin >> username;
+	cout << "Enter password: ";
+	cin >> password;
+
+	bool found = false;
+	for (int i = 0; i < userCount; ++i) {
+		if (users[i].usernames == username && users[i].passwords == password) {
+			loggedInUser = username;
+			found = true;
+			break;
+		}
+	}
+
+	if (found) {
+		cout << "Login successful. Welcome, " << loggedInUser << "!\n";
+		cout << "\nPress enter to continue.\n";
+		cin.ignore();
+		cin.get();
+		return 1;
+	}
+	else {
+		cout << "Invalid username or password. Please try again.\n\n";
+		return 0;
+	}
+	return 0;
+}
+
+void loadUser(User*users) {
 	ifstream file("user.txt");
 
 	if (!file) {
@@ -38,33 +95,23 @@ void loadUser() {
 		return;
 	}
 
-	users.clear();
-
 	string line;
-	while (getline(file, line)) {
-
-		if(line.empty()) {
-			continue; // Skip empty lines
-		}
+	while (getline(file, line) && userCount < MAX_USERS) {
 
 		stringstream ss (line);
 		User userInfo;
 
-		getline(ss, userInfo.username, ',');
-		getline(ss, userInfo.password);
+		getline(ss, userInfo.usernames, ',');
+		getline(ss, userInfo.passwords, ',');
 
-		if(!userInfo.username.empty() && !userInfo.password.empty()) {
-			users.push_back(userInfo);
-		}
-		else {
-			cout << "Warning: Skipping invalid user entry in file." << endl;
-		}
+		users[userCount] = userInfo;
+		userCount++;
 	}
 
 	file.close();
 }
 
-void saveUser() {
+void saveUser(User*users) {
 	ofstream file("user.txt");
 
 	if (!file) {
@@ -72,8 +119,8 @@ void saveUser() {
 		return;
 	}
 
-	for (int i = 0; i < users.size(); i++) {
-		file << users[i].username << "," << users[i].password << endl;
+	for (int i = 0; i < userCount; i++) {
+		file << users[i].usernames << "," << users[i].passwords << endl;
 	}
 
 	file.close();
@@ -83,10 +130,10 @@ void saveUser() {
 
 void userMenu() {
 
-	loadUser();
 	char loginChoice;
 	User user;
 	string enteredUsername, enteredPassword;
+	loadUser(&user);
 
 	cout << "=================================" << endl;
 	cout << "            USER MENU            " << endl;
@@ -108,23 +155,8 @@ void userMenu() {
 			cout << "            Register            \n";
 			cout << "================================\n";
 
-			cout << "Username :";
-			cin >> user.username;
-			cout << "Password :";
-			cin >> user.password;
-			
-			cout << "-----------------------------------------";
-			if (userExist(user.username)){
-				cout << "Username exist! Please use another username.";
-				continue;
-			}
-			else {
-				users.push_back(user);
-				saveUser();
-
-				cout << "Register successful! You can log in now.\n";
-				cout << "Press ENTER to continue...";
-			}
+			registerUser(&user);
+			saveUser(&user);
 			break;
 
 
@@ -132,20 +164,8 @@ void userMenu() {
 			cout << "================================\n";
 			cout << "             Login              \n";
 			cout << "================================\n";
-			cout << "Username :";
-			cin >> enteredUsername;
-			cout << "Password :";
-			cin >> enteredPassword;
 
-			if(loginUser(enteredUsername, enteredPassword)) {
-				cout << "Login successful!\n";
-				cout << "Welcome, " << enteredUsername << "!\n";
-				cout << "Press ENTER to continue...";
-				break;
-
-			} else {
-				cout << "Invalid username or password. Please try again.\n";
-			}
+			loginUser(&user);
 			break;
 				
 		case '0':

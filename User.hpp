@@ -11,6 +11,6 @@ struct Member {
 };
 
 struct User {
-	string username;
-	string password;
+	string usernames;
+	string passwords;
 };
