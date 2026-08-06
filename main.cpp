@@ -3,8 +3,8 @@
 #include "Admin.cpp"
 #include "UserMenu.cpp"
 #include "User.hpp"
-#include "User.cpp"
-#include "Schedule.cpp"
+#include "UserMenu.cpp"
+#include "ScheduleMenu.cpp"
 using namespace std;
 
 int main() {
