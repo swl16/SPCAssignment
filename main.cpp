@@ -1,9 +1,7 @@
 #include<iostream>
 #include<iomanip>
-#include "Admin.cpp"
-#include "UserMenu.cpp"
+
 #include "User.hpp"
-#include "ScheduleMenu.cpp"
 using namespace std;
 
 int main() {
